@@ -2,45 +2,50 @@
 #include <iostream>
 #include "Shapes/Rectangle.h"
 #include <stdlib.h>
-#include <climits>
+#include <chrono>
 
-double CalculateError(sf::Image &img1, sf::Image &img2, Shape* s) {
-    uint w = img1.getSize().x;
-    uint h = img1.getSize().y;
+double CalculateError(sf::Uint8 *img1, const sf::Uint8 *img2, Shape* s, int w, int h) {
     double e = 0;
-    for(int i = 0; i < w; i++) {
-        for(int j = 0; j < h; j++) {
+    for(int i = 0; i < h; i++) {
+        for (int j = 0; j < w; j++) {
+            int index = 4*(i * w + j);
             sf::Color c1;
-            if (s->Inside(i, j)) c1 = s->GetPixel(img1, i, j);
-            else c1 = img1.getPixel(i, j);
-
-            sf::Color c2 = img2.getPixel(i, j);
-            float total = std::abs(c2.r - c1.r)/255.f + std::abs(c2.g - c1.g)/255.f + std::abs(c2.b - c1.b)/255.f;
+            if (s->Inside(j, i)) c1 = s->GetPixel(img1, j, i);
+            else {
+                c1.r = img1[index];
+                c1.g = img1[index + 1];
+                c1.b = img1[index + 2];
+            }
+            sf::Color c2;
+            c2.r = img2[index], c2.g = img2[index + 1], c2.b = img2[index + 2];
+            float total = (std::abs(c2.r - c1.r) + std::abs(c2.g - c1.g) + std::abs(c2.b - c1.b)) / 255.f;
             e += total;
         }
     }
 
-
-    return e;
+    return e / (w * h * 3);
  }
 
 int main(int argc, char ** argv)
 {
     // Create the main window
-    int iterations = 2000;
-    int screen_width = 800, screen_height = 600;
+    auto start = std::chrono::high_resolution_clock::now();
+    int iterations = 500;
+    int screen_width = 215, screen_height = 235;
     sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "SFML window");
 
-    double prev_error = 1.0 * INT_MAX;
-    std::string img_path = "images/img_1.jpg";
+    double prev_error = 1.0;
+    std::string img_path = "images/img_5.jpeg";
     sf::Image actual;
     if (!actual.loadFromFile(img_path)){
         std::cout<<"Error in loading actual image";
         return EXIT_FAILURE;
     }
-
-    sf::Image buffer;
-    buffer.create(screen_width, screen_height, sf::Color::White);
+    int totalPixels = screen_width * screen_height;
+    sf::Uint8 *buffer = new sf::Uint8[totalPixels * 4];
+    for (int i = 0; i < 4 * totalPixels; i++) buffer[i] = 255;
+     const sf::Uint8 *actualImgPtr = actual.getPixelsPtr();
+//    sf::Image buffer;
 
     // Start the game loop
     int count  = 0;
@@ -61,21 +66,29 @@ int main(int argc, char ** argv)
             r.CreateRandDimensions();
 
             // Check if this shape reduces the error
-            double error = CalculateError(buffer, actual, &r);
+            double error = CalculateError(buffer, actualImgPtr, &r, screen_width, screen_height);
 
             // If it doesn't create continue
             if (error < prev_error) {
                 count++;
                 prev_error = error;
-                std::cout<<count<<". "<<error<<std::endl;
+                std::cout<<"Count: "<<count<<" Accuracy: "<<(1 - prev_error) * 100 <<"%"<<std::endl;
                 r.FillWithColor(buffer);
+                sf::Image img;
+                img.create(screen_width, screen_height, buffer);
                 sf::Texture t;
-                t.loadFromImage(buffer);
+                t.loadFromImage(img);
                 sf::Sprite sp;
                 sp.setTexture(t);
                 window.clear();
                 window.draw(sp);
                 window.display();
+            }
+
+            if (count == iterations) {
+                auto stop = std::chrono::high_resolution_clock::now();
+                auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start);
+                std::cout<<"Time taken is "<<duration.count()<<"s"<<std::endl;
             }
         }
 

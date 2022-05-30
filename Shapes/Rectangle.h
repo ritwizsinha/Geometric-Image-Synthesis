@@ -19,5 +19,5 @@ public:
     Rectangle(float sh, float sw);
     void CreateRandDimensions() override;
     bool Inside(int i, int j) override;
-    void FillWithColor(sf::Image &img) override;
+    void FillWithColor(sf::Uint8 * buffer) override;
 };

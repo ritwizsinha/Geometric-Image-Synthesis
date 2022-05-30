@@ -24,11 +24,11 @@ void Rectangle::CreateRandDimensions() {
     color = sf::Color{r, g, b, a};
 }
 
-void Rectangle::FillWithColor(sf::Image &img) {
+void Rectangle::FillWithColor(sf::Uint8 *buffer) {
     for(int i = 0; i < h; i++)
         for(int j = 0; j < w; j++)
             if (i + y < screen_height and j + x < screen_width)
-                SetPixel(img, j + x, i + y);
+                SetPixel(buffer, j + x, i + y);
 }
 
 bool Rectangle::Inside(int i, int j) {

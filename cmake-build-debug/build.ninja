@@ -67,6 +67,12 @@ build CMakeFiles/untitled.dir/Shapes/Rectangle.cpp.o: CXX_COMPILER__untitled_Deb
   OBJECT_DIR = CMakeFiles/untitled.dir
   OBJECT_FILE_DIR = CMakeFiles/untitled.dir/Shapes
 
+build CMakeFiles/untitled.dir/Shapes/Triangle.cpp.o: CXX_COMPILER__untitled_Debug /home/ritwiz/Desktop/github.com/geo-image-synthesis/Shapes/Triangle.cpp || cmake_object_order_depends_target_untitled
+  DEP_FILE = CMakeFiles/untitled.dir/Shapes/Triangle.cpp.o.d
+  FLAGS = -O0 -g
+  OBJECT_DIR = CMakeFiles/untitled.dir
+  OBJECT_FILE_DIR = CMakeFiles/untitled.dir/Shapes
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target untitled
@@ -75,7 +81,7 @@ build CMakeFiles/untitled.dir/Shapes/Rectangle.cpp.o: CXX_COMPILER__untitled_Deb
 #############################################
 # Link the executable untitled
 
-build untitled: CXX_EXECUTABLE_LINKER__untitled_Debug CMakeFiles/untitled.dir/main.cpp.o CMakeFiles/untitled.dir/Shapes/Shape.cpp.o CMakeFiles/untitled.dir/Shapes/Rectangle.cpp.o
+build untitled: CXX_EXECUTABLE_LINKER__untitled_Debug CMakeFiles/untitled.dir/main.cpp.o CMakeFiles/untitled.dir/Shapes/Shape.cpp.o CMakeFiles/untitled.dir/Shapes/Rectangle.cpp.o CMakeFiles/untitled.dir/Shapes/Triangle.cpp.o
   FLAGS = -O0 -g
   LINK_LIBRARIES = -lsfml-graphics  -lsfml-system  -lsfml-window  -lsfml-audio
   OBJECT_DIR = CMakeFiles/untitled.dir
