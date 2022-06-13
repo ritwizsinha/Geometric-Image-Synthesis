@@ -18,6 +18,6 @@ class Rectangle : public Shape {
 public:
     Rectangle(float sh, float sw);
     void CreateRandDimensions() override;
-    bool Inside(int i, int j) override;
+    bool Inside(const Point &p) override;
     void FillWithColor(sf::Uint8 * buffer) override;
 };

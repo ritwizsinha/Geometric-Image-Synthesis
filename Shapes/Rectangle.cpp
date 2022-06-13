@@ -3,14 +3,10 @@
 //
 #include "Rectangle.h"
 
-float getRandomFloat(int num) {
-    return (1.0 * rand() / RAND_MAX) * num;
-}
+//float getRandomFloat(int num) {
+//    return (1.0 * rand() / RAND_MAX) * num;
+//}
 
-Rectangle::Rectangle(float sh, float sw) {
-    screen_height = sh;
-    screen_width = sw;
-}
 void Rectangle::CreateRandDimensions() {
     x = getRandomFloat(screen_width);
     y = getRandomFloat(screen_height);
@@ -31,6 +27,6 @@ void Rectangle::FillWithColor(sf::Uint8 *buffer) {
                 SetPixel(buffer, j + x, i + y);
 }
 
-bool Rectangle::Inside(int i, int j) {
-    return i >= x && i < std::min(screen_width, x + w) && j >= y && j < std::min(screen_height, y + h);
+bool Rectangle::Inside(const Point& p) {
+    return p.x >= x && p.x < std::min(screen_width, x + w) && p.y >= y && p.y < std::min(screen_height, y + h);
 }

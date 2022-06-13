@@ -4,6 +4,11 @@
 
 #include "Shape.h"
 
+Shape::Shape(float sw, float sh) {
+    screen_width = sw;
+    screen_height = sh;
+}
+
 void Shape::SetPixel(sf::Uint8 *buffer, int i, int j) {
     int index = 4*(j * screen_width + i);
     sf::Uint8 r = buffer[index];
@@ -36,4 +41,8 @@ sf::Color Shape::GetPixel(sf::Uint8 *buffer, int i, int j) {
         b,
         255
     };
+}
+
+float Shape::getRandomFloat(int num) {
+    return (1.0 * rand() / RAND_MAX) * num;
 }

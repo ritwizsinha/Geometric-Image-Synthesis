@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Shapes/Rectangle.h"
+#include "Shapes/RegularPolygon.h"
 #include <stdlib.h>
 #include <chrono>
 
@@ -10,7 +11,7 @@ double CalculateError(sf::Uint8 *img1, const sf::Uint8 *img2, Shape* s, int w, i
         for (int j = 0; j < w; j++) {
             int index = 4*(i * w + j);
             sf::Color c1;
-            if (s->Inside(j, i)) c1 = s->GetPixel(img1, j, i);
+            if (s->Inside(Point{j, i})) c1 = s->GetPixel(img1, j, i);
             else {
                 c1.r = img1[index];
                 c1.g = img1[index + 1];
@@ -28,14 +29,15 @@ double CalculateError(sf::Uint8 *img1, const sf::Uint8 *img2, Shape* s, int w, i
 
 int main(int argc, char ** argv)
 {
+    srand(time(0));
     // Create the main window
     auto start = std::chrono::high_resolution_clock::now();
-    int iterations = 500;
-    int screen_width = 215, screen_height = 235;
+    int iterations = 1000;
+    int screen_width = 800, screen_height = 600;
     sf::RenderWindow window(sf::VideoMode(screen_width, screen_height), "SFML window");
 
     double prev_error = 1.0;
-    std::string img_path = "images/img_5.jpeg";
+    std::string img_path = "images/img_1.jpg";
     sf::Image actual;
     if (!actual.loadFromFile(img_path)){
         std::cout<<"Error in loading actual image";
@@ -62,13 +64,13 @@ int main(int argc, char ** argv)
 
         // Create a random shape
         if (count < iterations) {
-            Rectangle r(screen_height, screen_width);
+            RegularPolygon r(screen_width, screen_height);
             r.CreateRandDimensions();
 
             // Check if this shape reduces the error
             double error = CalculateError(buffer, actualImgPtr, &r, screen_width, screen_height);
 
-            // If it doesn't create continue
+//             If it doesn't create continue
             if (error < prev_error) {
                 count++;
                 prev_error = error;
