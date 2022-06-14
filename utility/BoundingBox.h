@@ -12,6 +12,7 @@
 class BoundingBox {
 public:
     Point l, h;
+    int screen_width, screen_height;
     BoundingBox(int, int);
     void evaluate(const Point &);
 
