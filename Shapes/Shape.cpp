@@ -9,7 +9,8 @@ Shape::Shape(float sw, float sh) {
     screen_height = sh;
 }
 
-void Shape::SetPixel(sf::Uint8 *buffer, int i, int j) {
+void Shape::SetPixel(sf::Uint8 *buffer, Point& p) {
+    auto &[i, j] = p;
     int index = 4*(j * screen_width + i);
     sf::Uint8 r = buffer[index];
     sf::Uint8 g = buffer[index+1];
@@ -23,7 +24,8 @@ void Shape::SetPixel(sf::Uint8 *buffer, int i, int j) {
     buffer[index] = r, buffer[index + 1] = g, buffer[index + 2] = b, buffer[index + 3] = 255;
 }
 
-sf::Color Shape::GetPixel(sf::Uint8 *buffer, int i, int j) {
+sf::Color Shape::GetPixel(sf::Uint8 *buffer, Point &p) {
+    auto &[i, j] = p;
     int index = 4*(j * screen_width + i);
     sf::Uint8 r = buffer[index];
     sf::Uint8 g = buffer[index+1];

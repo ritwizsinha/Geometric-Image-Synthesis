@@ -17,7 +17,7 @@ void RegularPolygon::CreateRandDimensions() {
     for(int i = 0, angle = offset_angle; i < sides; i++) {
         points[i].x = x_center + radius * cos(angle * 3.14 / 180);
         points[i].y = y_center + radius * sin(angle * 3.14 / 180);
-        b->evaluate(points[i].x, points[i].y);
+        b->evaluate(points[i]);
         angle += 360.0 / sides;
     }
 
@@ -35,20 +35,7 @@ RegularPolygon::RegularPolygon(double sw, double sh) : Shape(sw, sh) {
 }
 
 bool RegularPolygon::Inside(const Point &p) {
-    if (p.x < b->l.x or p.x > b->h.x or p.y < b->l.y or p.y > b->h.y) return false;
-    return true;
-//    return pips->cn_PnPoly(p, points, sides);
-//    int cn = 0;
-//    for(int i = 0; i < sides; i++) {
-//        int next = (i + 1) % sides;
-//        if (points[i].y != points[next].y) {
-//            float vt = (float)(p.y - points[i].y) / (points[next].y - points[i].y);
-//            float x_intersect = points[i].x + vt * (points[next].x - points[i].x);
-//            if (p.x < x_intersect) cn++;
-//        }
-//    }
-//
-//    return cn&1;
+    return pips->cn_PnPoly(p, points, sides);
 }
 
 bool RegularPolygon::doIntersect(Point p1, Point q1, Point p2, Point q2)
@@ -96,10 +83,12 @@ int RegularPolygon::orientation(Point p, Point q, Point r) {
 }
 
 void RegularPolygon::FillWithColor(sf::Uint8 *buffer) {
+    Point p = {0, 0};
     for(int i = b->l.x; i <= b->h.x; i++) {
         for(int j = b->l.y; j <= b->h.y; j++){
-            if (Inside(Point{i, j})) {
-                SetPixel(buffer, i, j);
+            p.x = i, p.y = j;
+            if (Inside(p)) {
+                SetPixel(buffer, p);
             }
             }
         }

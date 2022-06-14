@@ -12,8 +12,8 @@
 class BoundingBox {
 public:
     Point l, h;
-    BoundingBox(int x, int y);
-    void evaluate(int x, int y);
+    BoundingBox(int, int);
+    void evaluate(const Point &);
 
 };
 

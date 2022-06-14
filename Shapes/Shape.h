@@ -16,8 +16,8 @@ public:
     virtual void CreateRandDimensions() = 0;
     virtual void FillWithColor(sf::Uint8 *buffer) = 0;
     virtual bool Inside(const Point& p) = 0;
-    void SetPixel(sf::Uint8 *buffer, int i, int j);
-    sf::Color GetPixel(sf::Uint8 *buffer, int i, int j);
+    void SetPixel(sf::Uint8 *buffer, Point &p);
+    sf::Color GetPixel(sf::Uint8 *buffer, Point &p);
     static float getRandomFloat(int num);
 };
 

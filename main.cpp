@@ -11,7 +11,8 @@ double CalculateError(sf::Uint8 *img1, const sf::Uint8 *img2, Shape* s, int w, i
         for (int j = 0; j < w; j++) {
             int index = 4*(i * w + j);
             sf::Color c1;
-            if (s->Inside(Point{j, i})) c1 = s->GetPixel(img1, j, i);
+            Point p = {j, i};
+            if (s->Inside(p)) c1 = s->GetPixel(img1, p);
             else {
                 c1.r = img1[index];
                 c1.g = img1[index + 1];
