@@ -77,6 +77,9 @@ int main(int argc, char ** argv)
                 prev_error = error;
                 std::cout<<"Count: "<<count<<" Accuracy: "<<(1 - prev_error) * 100 <<"%"<<std::endl;
                 r.FillWithColor(buffer);
+            }
+
+            if (count == iterations) {
                 sf::Image img;
                 img.create(screen_width, screen_height, buffer);
                 sf::Texture t;
@@ -86,9 +89,6 @@ int main(int argc, char ** argv)
                 window.clear();
                 window.draw(sp);
                 window.display();
-            }
-
-            if (count == iterations) {
                 auto stop = std::chrono::high_resolution_clock::now();
                 auto duration = std::chrono::duration_cast<std::chrono::seconds>(stop - start);
                 std::cout<<"Time taken is "<<duration.count()<<"s"<<std::endl;

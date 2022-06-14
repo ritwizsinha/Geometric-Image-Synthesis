@@ -7,9 +7,9 @@
 #include <iostream>
 
 void RegularPolygon::CreateRandDimensions() {
-    double radius = rand() % (int)std::min(screen_height / 2, screen_width / 2);
-    double x_center = radius + rand() % (int)(screen_width - 2  * radius + 1);
-    double y_center = radius + rand() % (int)(screen_height - 2 * radius + 1);
+    double radius = rand() % (int)std::min(screen_height, screen_width);
+    double x_center = rand() % (int)(screen_width);
+    double y_center = rand() % (int)(screen_height);
     int offset_angle = rand() % 90;
     // The sides can be from 3 to 10
     sides = 3 + (rand() % 8);

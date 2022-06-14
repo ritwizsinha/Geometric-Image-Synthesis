@@ -16,4 +16,4 @@ before adding it, if the error has reduced it adds the rectangle otherwise it re
 rectangles, while not accurately describing the image, it needs a lot of improvement. I have to experiment and learn about error types to see how they affect per
 formance and results. I also have to implement better algorithms described above.
 ![Actual Image](images/img_1.jpg)
-![Image Created after 1200 iterations](images/img_1_1200_created.png)
+![Image with Regular Polygons 1000 iterations](Imgs/1000_iter_multi_poly.png)

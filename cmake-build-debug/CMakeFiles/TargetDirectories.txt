@@ -1,3 +1,0 @@
-/home/ritwiz/Desktop/github.com/geo-image-synthesis/cmake-build-debug/CMakeFiles/untitled.dir
-/home/ritwiz/Desktop/github.com/geo-image-synthesis/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/ritwiz/Desktop/github.com/geo-image-synthesis/cmake-build-debug/CMakeFiles/rebuild_cache.dir
